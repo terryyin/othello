@@ -39,3 +39,8 @@ class Test(unittest.TestCase):
         self.g.onPutWhite((3, 5))
         self.ai.think.assert_called_with()
 
+    def testCanNotPutOnTakenCell(self):
+        self.ai.reset_mock()
+        self.g.onPutWhite((3, 3))
+        self.assertEqual(1, self.ai.think.call_count)
+
