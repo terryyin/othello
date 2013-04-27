@@ -67,6 +67,10 @@ class board():
     def think(self):
         pass
     
+    def drawStones(self, stones):
+        for pos, isBlack in stones.items():
+            [self.drawWhite, self.drawBlack][isBlack](pos)
+            
     def drawWhite(self, pos):
         self.__drawStone(pos, "white")
         

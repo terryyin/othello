@@ -1,24 +1,39 @@
+
+from stones import stones
+
+BLACK = 1
+WHITE = 0
+
 class game:
     def __init__(self, board, white, black):
         self.board = board
+        self.players = [white, black]
         self.white = white
         self.black = black
         self.white.registerPutEvent(self.onPutWhite)
         self.black.registerPutEvent(self.onPutBlack)
-        self.board.drawWhite((3, 3))
-        self.board.drawWhite((4, 4))
-        self.board.drawBlack((3, 4))
-        self.board.drawBlack((4, 3))
-        self.black.think()
+        self.stones = stones({ (3, 3) : BLACK,
+                       (4, 4) : BLACK,
+                       (3, 4) : WHITE,
+                       (4, 3) : WHITE
+                      })
+        self.board.drawStones(self.stones.stones)
+        self.players[BLACK].think()
     
     def start(self):
         self.board.eventLoop()
         return self
     
     def onPutWhite(self, pos):
-        self.board.drawWhite(pos)
-        self.black.think()
+        self.onPut(pos, WHITE)
         
     def onPutBlack(self, pos):
-        self.board.drawBlack(pos)
-        self.white.think()
+        self.onPut(pos, BLACK)
+        
+    def onPut(self, pos, black):
+        if self.stones.put(pos, black):
+            self.board.drawStones(self.stones.stones)
+            self.players[not black].think()
+        else:
+            self.players[black].deny()
+

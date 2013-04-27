@@ -8,4 +8,4 @@ except:
     from othello.board import board
 
 ui = board()
-game(ui, ui, ai()).start()
+game(ui, black(), ui).start()
