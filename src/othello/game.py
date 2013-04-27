@@ -1,5 +1,5 @@
 
-from stones import stones
+from .stones import stones
 
 BLACK = 1
 WHITE = 0

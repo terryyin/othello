@@ -1,5 +1,5 @@
 import unittest
-from mock import Mock, call
+from .mock import Mock, call
 from src.othello import game
 
 class TestGameInitialization(unittest.TestCase):
