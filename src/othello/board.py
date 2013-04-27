@@ -24,7 +24,7 @@ class board():
             return self.__undo(event)
         self.canvas.bind('<Button-1>', handler)
         self.canvas.bind('<Button-2>', undo)
-        self.moves = []
+        self.myTurn = False
         
     def _drawGround(self):
         for i in range(0, BOARD_SIZE + 1):
@@ -42,8 +42,10 @@ class board():
                                width=self.LINE_THICKNESS)
         
     def __onClick(self, event):
-        pos = self._getPosition(event.x, event.y)
-        self.onPut(pos)
+        if self.myTurn:
+            pos = self._getPosition(event.x, event.y)
+            self.myTurn = False
+            self.onPut(pos)
     
     def __undo(self, event):
         #self.canvas.delete(m[2])
@@ -65,7 +67,10 @@ class board():
         self.onPut = onPut
         
     def think(self):
-        pass
+        self.myTurn = True
+    
+    def deny(self):
+        self.myTurn = True
     
     def drawStones(self, stones):
         for pos, isBlack in stones.items():
