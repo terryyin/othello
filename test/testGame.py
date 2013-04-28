@@ -1,5 +1,5 @@
 import unittest
-from .mock import Mock, call
+from .mock import Mock
 from src.othello import game
 
 class TestGameInitialization(unittest.TestCase):
@@ -23,7 +23,7 @@ class TestGameInitialization(unittest.TestCase):
         self.assertFalse(stones[(3, 4)])
 
     def testWhenStartBlackGotChanceToThink(self):
-        self.black.think.assert_called_with()
+        self.black.think.assert_called_with(self.g.stones, 1)
 
 class TestGame(unittest.TestCase):
 
@@ -41,7 +41,7 @@ class TestGame(unittest.TestCase):
         self.g.onPutBlack((3, 5))
         stones = self.board.drawStones.call_args[0][0]
         self.assertTrue(stones[(3, 5)])
-        self.white.think.assert_called_with()
+        self.white.think.assert_called_with(self.g.stones, 0)
 
     def testCanNotPutOnTakenCell(self):
         self.g.onPutWhite((3, 3))

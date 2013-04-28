@@ -4,19 +4,25 @@ class stones:
     def __init__(self, putStones):
         self.stones = putStones
     
+
     def put(self, pos, black):
         if pos in self.stones:
             return False
-        reverse = [pos]
-        for i in range(8):
-            reverseOnThisDirection = self._getReverseOfDirection(pos, black, i)
-            reverse.extend(reverseOnThisDirection)
-        if len(reverse) > 1:
-            for stone in reverse:
+        reverse = self._getReversePosistions(pos, black)
+        if len(reverse) > 0:
+            for stone in reverse + [pos]:
                 self.stones[stone] = black
             return True
         return False
     
+    def _getReversePosistions(self, pos, black):
+        reverse = []
+        for i in range(8):
+            reverseOnThisDirection = self._getReverseOfDirection(pos, black, i)
+            reverse.extend(reverseOnThisDirection)
+        
+        return reverse
+
     def _getReverseOfDirection(self, pos, black, direct):
         reverseOnThisDirection = []
         for neighbor in self._neighborsOf(pos, direct):

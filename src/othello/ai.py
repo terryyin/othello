@@ -1,6 +1,6 @@
 class ai:
     def registerPutEvent(self, onPut):
-        self.onPut = onPut
+        self.put = onPut
         
-    def think(self):
-        pass
+    def think(self, stones, whoAmI):
+        self.put((0, 2))

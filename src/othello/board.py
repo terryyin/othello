@@ -66,7 +66,7 @@ class board():
     def registerPutEvent(self, onPut):
         self.onPut = onPut
         
-    def think(self):
+    def think(self, stones, whoAmI):
         self.myTurn = True
     
     def deny(self):

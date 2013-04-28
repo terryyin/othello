@@ -18,7 +18,7 @@ class game:
                        (4, 3) : WHITE
                       })
         self.board.drawStones(self.stones.stones)
-        self.players[BLACK].think()
+        self.players[BLACK].think(self.stones, BLACK)
     
     def start(self):
         self.board.eventLoop()
@@ -33,7 +33,7 @@ class game:
     def onPut(self, pos, black):
         if self.stones.put(pos, black):
             self.board.drawStones(self.stones.stones)
-            self.players[not black].think()
+            self.players[not black].think(self.stones, not black)
         else:
             self.players[black].deny()
 
