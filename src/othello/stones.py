@@ -1,27 +1,36 @@
+from itertools import product
 
 class stones:
     
     def __init__(self, putStones):
         self.stones = putStones
+        self.availablePositions = set(product(range(8), repeat=2)) - set(self.stones.keys())
     
 
     def put(self, pos, black):
         if pos in self.stones:
             return False
-        reverse = self._getReversePosistions(pos, black)
+        reverse = self.getReversePosistions(pos, black)
         if len(reverse) > 0:
             for stone in reverse + [pos]:
                 self.stones[stone] = black
+            self.availablePositions.remove(pos)
             return True
         return False
     
-    def _getReversePosistions(self, pos, black):
+    def getReversePosistions(self, pos, black):
         reverse = []
         for i in range(8):
             reverseOnThisDirection = self._getReverseOfDirection(pos, black, i)
             reverse.extend(reverseOnThisDirection)
         
         return reverse
+    
+    def possibleMoves(self, who):
+        for pos in self.availablePositions:
+            if pos not in self.stones:
+                if self.getReversePosistions(pos, who):
+                    yield pos
 
     def _getReverseOfDirection(self, pos, black, direct):
         reverseOnThisDirection = []

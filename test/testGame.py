@@ -26,7 +26,6 @@ class TestGameInitialization(unittest.TestCase):
         self.black.think.assert_called_with(self.g.stones, 1)
 
 class TestGame(unittest.TestCase):
-
         
     def setUp(self):
         self.board = Mock()

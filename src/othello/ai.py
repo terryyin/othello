@@ -3,4 +3,5 @@ class ai:
         self.put = onPut
         
     def think(self, stones, whoAmI):
-        self.put((0, 2))
+        for pos in stones.possibleMoves(whoAmI):
+            self.put(pos)
