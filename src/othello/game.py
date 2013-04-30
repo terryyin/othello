@@ -12,10 +12,10 @@ class game:
         self.black = black
         self.white.registerPutEvent(self.onPutWhite)
         self.black.registerPutEvent(self.onPutBlack)
-        self.stones = stones({ (3, 3) : BLACK,
-                       (4, 4) : BLACK,
-                       (3, 4) : WHITE,
-                       (4, 3) : WHITE
+        self.stones = stones({ (3, 3) : WHITE,
+                       (4, 4) : WHITE,
+                       (3, 4) : BLACK,
+                       (4, 3) : BLACK
                       })
         self.board.drawStones(self.stones.stones)
         self.players[BLACK].think(self.stones, BLACK)
@@ -30,10 +30,16 @@ class game:
     def onPutBlack(self, pos):
         self.onPut(pos, BLACK)
         
-    def onPut(self, pos, black):
-        if self.stones.put(pos, black):
+    def onPut(self, pos, who):
+        if self.stones.put(pos, who):
             self.board.drawStones(self.stones.stones)
-            self.players[not black].think(self.stones, not black)
+            who = not who
+            if not list(self.stones.possibleMoves(who)):
+                who = not who
+                if not list(self.stones.possibleMoves(who)):
+                    self.board.end(self.stones.blackVsWhite)
+                    return
+            self.players[who].think(self.stones, who)
         else:
-            self.players[black].deny()
+            self.players[who].deny()
 
